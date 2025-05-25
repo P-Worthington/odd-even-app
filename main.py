@@ -5,15 +5,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def check_number():
-    # Your odd/even logic here
-    return "Hello from odd-even app!"
-
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 8080))
-    app.run(host='0.0.0.0', port=port)
-
-@app.route('/')
-def check_number():
     num = request.args.get('number', type=int)
     if num is None:
         return "Please provide a number in the URL like ?number=4"
@@ -23,4 +14,6 @@ def check_number():
         return f"{num} is odd."
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 8080))
+    # Listen on all interfaces on the correct port for Cloud Run
+    app.run(host='0.0.0.0', port=port, debug=True)
